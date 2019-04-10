@@ -25,7 +25,7 @@ const DEFAULT_CONFIG = {
         return true;
     },
     isMarkupSocialsHandlersEnabled: false,
-    apiUrl: '//login.xsolla.com/api/',
+    apiUrl: 'https://login.xsolla.com/api/',
     maxXLClickDepth: 20,
     onlyWidgets: false,
     popupBackgroundColor: 'rgb(187, 187, 187)',
@@ -97,22 +97,6 @@ class XL {
             if (this.config.callbackUrl) {
                 params.login_url = this.config.callbackUrl;
             }
-
-            const updateSocialLinks = () => {
-                this.api.getSocialsURLs((response) => {
-                    this.socialUrls = {};
-                    for (let key in response) {
-                        if (response.hasOwnProperty(key)) {
-                            this.socialUrls['sn-' + key] = response[key];
-                        }
-                    }
-                }, (e) => {
-                    console.error(e);
-                }, params);
-            };
-
-            updateSocialLinks();
-            setInterval(updateSocialLinks, 1000 * 60 * 59);
 
             const maxClickDepth = this.config.maxXLClickDepth;
             // Find closest ancestor with data-xl-auth attribute
